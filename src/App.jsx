@@ -1,26 +1,42 @@
 /*
-For this exercise, imagine that colleagues gave you code they wrote for a React app they're working on.
+Your given a code snippet that's part of a bigger app that deals with user image uploads.
 
-At the moment, this code is failing and it's your job to find and fix all errors that are hiding in the code.
+Since the native, built-in <input type="file"> element is hard to style and doesn't fit the intended app style, it's hidden via display: none in the provided index.css file.
+
+Therefore, to make the file picker work without being displayed, your task is to ensure that the click event on the <input type="file"> element is triggered whenever the <button>Pick Image</button> is clicked.
+
+This can be achieved by calling the built-in click() method on the underlying input element.
+
+You should use React's "ref" feature to get hold of the <input type="file"> element and execute that click() method on it whenever the <button> is clicked.
+
+Important: In this Udemy exercise environment, React hooks must be used directly on the imported React object (import React from 'react'). For example, useState (which you don't need for this task) would then be called like this: React.useState().
 */
 
 
 
 import React from 'react';
 
-import './index.css';
+function App() {
+  const fileInputRef = React.useRef();
 
-// don't change the Component name "App"
-export default function App() {
-    const clickHandler = () => {
-        console.log('Clicked!');
-    };
-    
-    return (
-        <div>
-          <h2>You're logged in!</h2>
-          <p>Welcome to your user profile!</p>
-          <button onClick={clickHandler}>Click me!</button>
-        </div>
-    );
+  function handlePickImage() {
+    fileInputRef.current.click();
+  }
+
+  return (
+    <div id="app">
+      <p>Please select an image</p>
+      <p>
+        <input
+          data-testid="file-picker"
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+        />
+        <button onClick={handlePickImage}>Pick Image</button>
+      </p>
+    </div>
+  );
 }
+
+export default App;
