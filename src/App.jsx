@@ -1,47 +1,47 @@
 /*
-You're working on a part of an online shop where a discounted price should be displayed on the screen once the user clicked a button.
+You're working on a part of a web app that's responsible for showing a warning when a user is about to perform a dangerous action.
 
-Your task is to add an event listener to listen for clicks on the button that's already included in the App component.
+Therefore, your task is to conditionally show a warning box once a user has clicked a specific button. Inside that warning dialog, another button allows users to dismiss the warning (i.e., remove the warning box from the screen).
 
-Upon a button click, the price should change from $100 to $75.
+For this task, you must react to clicks on both <button> elements that are part of the starting code. The second button, outside of the <div> with the id="alert", should show the <div id="alert"> (and all its content). The button inside that <div> should then hide it again (i.e., remove it from the DOM).
 
-Add a state value to the existing App component function and make sure the state value is both updated upon button clicks and output as part of the JSX code.
-
----
-
-Important: In this Udemy environment, you CAN'T import & use useState like this:
-
-  import { useState } from 'react';
-  ...
-  useState();
-  Instead, import & use it like this (in your component):
-
-  import React from 'react';
-  ...
-  React.useState();
+It's up to you whether you want to use a ternary expression or store the conditionally shown JSX code in a variable.
 */
 
 
 
-// IMPORTANT: You CAN'T import & use useState like this in this Udemy environment
+import React from 'react';
+
+// IMPORTANT:
+// In this Udemy environment, you CAN'T import & use useState like this:
 // import { useState } from 'react'
 // Instead, import & use it like this:
 // import React from 'react';
-// React.useState();
+// React.useState(...)
 
-import React from 'react';
-
+// don't change the Component name "App"
 export default function App() {
-  const [price, setPrice] = React.useState(100);
+  const [showAlert, setShowAlert] = React.useState(false);
 
-  function applyDiscount() {
-    setPrice(75);
+  function handleDeleteClick() {
+    setShowAlert(true);
+  }
+
+  function handleProceedClick() {
+    setShowAlert(false);
   }
 
   return (
     <div>
-      <p data-testid="price">${price}</p>
-      <button onClick={applyDiscount}>Apply Discount</button>
+      {showAlert ? (
+        <div data-testid="alert" id="alert">
+          <h2>Are you sure?</h2>
+          <p>These changes can't be reverted!</p>
+          <button onClick={handleProceedClick}>Proceed</button>
+        </div>
+      ) : (
+        <button onClick={handleDeleteClick}>Delete</button>
+      )}
     </div>
   );
 }
