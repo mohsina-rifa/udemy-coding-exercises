@@ -1,29 +1,35 @@
 /*
-You're working on a "Todo List" web app and your task is to output a list of dummy todo items dynamically. For this task, a Todo component has been prepared for you, though you must still add some code to it to receive and output the todo text.
+Your task is to edit the existing Summary component such that it outputs the following content:
 
-To be more precise: In the App component, you should transform the DUMMY_TODOS array that's provided to you (which must not be changed!) to a list of JSX elements (<Todo> elements to be precise). Every Todo component item must receive and output the todo text via a prop called text.
+<h1>Summary</h1>
+<p>{text}</p>
+Inside the Summary component, this content must not be wrapped by any other HTML element!
+
+For example, this code would be wrong:
+
+  <div>
+    <h1>Summary</h1>
+    <p>{text}</p>
+  </div>
 */
 
 
 
-import React from 'react';
-
-import Todo from './Todo';
-
-// don't remove the export keyword here!
-export const DUMMY_TODOS = [
-    'Learn React',
-    'Practice React',
-    'Profit!'
-];
-
-// don't change the Component name "App"
-export default function App() {
+function Summary({ text }) {
   return (
-    <div>
-      {DUMMY_TODOS.map((todo, index) => (
-        <Todo key={index} text={todo} />
-      ))}
+    <>
+      <h1>Summary</h1>
+      <p>{text}</p>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <div id="app" data-testid="app">
+      <Summary text="Fragments help you avoid unnecessary HTML elements." />
     </div>
   );
 }
+
+export default App;
