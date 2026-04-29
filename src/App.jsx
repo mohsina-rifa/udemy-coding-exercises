@@ -1,40 +1,36 @@
 /*
-Your task is to enhance the demo app that's given to you such that clicking the "Yes" and "No" buttons changes the styling of the h1 heading element.
+Your task is to dynamically apply a style (color: red) to the <p>Style me</p> element in the provided React app.
 
-Whenever the "Yes" button is clicked, the "highlight-green" CSS class should be set on the h1 element. For the "No" button, it's the "highlight-red" class that must be applied.
+The style should be applied as an inline style (i.e., via the style attribute / prop) when the <button> is clicked for the first time. Once the button is clicked again, the styling should switch back to color: white, which should also be the initial style.
 
-If not button was clicked yet, no CSS class should be added to the h1 element.
-
-Important: In this Udemy exercise environment, React hooks must be used directly on the imported React object (import React from 'react'). For example, useState would then be called like this: React.useState().
+Make sure that the button toggles between these two styles (color: white <=> color: red).
 */
 
 
 
 import React from 'react';
 
-function App() {
-  const [highlight, setHighlight] = React.useState("");
+// don't change the Component name "App"
+export default function App() {
+  const [isRed, setIsRed] = React.useState(false);
 
-  let h1Class = "";
-  if (highlight === "green") {
-    h1Class = "highlight-green";
-  } else if (highlight === "red") {
-    h1Class = "highlight-red";
+  function toggleStyle() {
+    setIsRed((prev) => !prev);
   }
 
   return (
-    <div id="app">
-      <h1 className={h1Class}>CSS is great!</h1>
-      <menu>
-        <li>
-          <button onClick={() => setHighlight("green")}>Yes</button>
-        </li>
-        <li>
-          <button onClick={() => setHighlight("red")}>No</button>
-        </li>
-      </menu>
+    <div>
+      <p
+        style={{
+          color: isRed ? "red" : "white",
+          fontSize: "2.5rem",
+          fontWeight: "bold",
+          margin: "2rem 0 2.5rem 0",
+        }}
+      >
+        Style me!
+      </p>
+      <button onClick={toggleStyle}>Toggle style</button>
     </div>
   );
 }
-
-export default App;
