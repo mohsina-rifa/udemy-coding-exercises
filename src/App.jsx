@@ -1,92 +1,56 @@
 /*
-Your task is to build a highly re-usable, custom Button component that can be used in all the following ways (also see the code in the App.js file):
+Your task is to collect the values entered into the two input controls (<textarea> and <input>) via two-way binding.
 
+In addition, you should pass the collected values via the appropriate props to the already existing Review component.
 
-"Filled" mode (default):
-  <Button>Default</Button>
-or
-  <Button mode="filled">Filled</Button>
+Important: In this Udemy workspace, you must use React.useState() instead of just useState()!
 
-"Outline" mode:
-  <Button mode="outline">Outline</Button>
+The final app should allow users to enter values and then see those entered values in the Review component which is output below the input components.
 
-"Text-only" mode:
-  <Button mode="text">Text</Button>
-
-With Icon:
-  <Button Icon={HomeIcon}>Home</Button>
-or
-  <Button Icon={PlusIcon} mode="text">
-    Add
-  </Button>
-
-  
-Hint: To make sure the icon becomes visible (if passed correctly to the component & used in there), wrap the icon component in the button with a <span> that has the class "button-icon" on it.
-
-Also wrap the children prop with a <span>!
-
-You find all the styles (CSS classes) that are required to build a button that supports these different "modes" in the provided index.css file!
-
-All buttons need a button CSS class - and then, depending on their mode, additional classes.
-
-In addition, the custom Button component must accept all standard props that could be set on the built-in <button>. These props should be forwarded to the default <button> element that will be used in the custom Button component.
-
-Your task therefore is to work on the Button component provided in the Button.js file. Don't add multiple custom components, instead work on that one provided component and make sure that it supports all these different modes & features. Also make sure, that if no mode is set, the "filled" mode is assumed as a default.
+The "Save" button is just there for decoration purposes - you don't need to do anything with that!
 */
 
 
 
-import Button from './Button';
-import HomeIcon from './HomeIcon';
-import PlusIcon from './PlusIcon';
+import React from 'react';
+import Review from './Review';
 
+// don't change the Component name "App"
 function App() {
+  const [feedback, setFeedback] = React.useState('');
+  const [student, setStudent] = React.useState('');
+
+  function handleFeedbackChange(event) {
+    setFeedback(event.target.value);
+  }
+
+  function handleStudentChange(event) {
+    setStudent(event.target.value);
+  }
+
   return (
-     <div id="app">
-      <section>
-        <h2>Filled Button (Default)</h2>
+    <>
+      <section id="feedback">
+        <h2>Please share some feedback</h2>
         <p>
-          <Button>Default</Button>
+          <label>Your Feedback</label>
+          <textarea value={feedback} onChange={handleFeedbackChange} />
         </p>
         <p>
-          <Button mode="filled">Filled (Default)</Button>
-        </p>
-      </section>
-      <section>
-        <h2>Button with Outline</h2>
-        <p>
-          <Button mode="outline">Outline</Button>
+          <label>Your Name</label>
+          <input type="text" value={student} onChange={handleStudentChange} />
         </p>
       </section>
-      <section>
-        <h2>Text-only Button</h2>
+      <section id="draft">
+        <h2>Your feedback</h2>
+
+        <Review feedback={feedback} student={student} />
+
         <p>
-          <Button mode="text">Text</Button>
+          <button>Save</button>
         </p>
       </section>
-      <section>
-        <h2>Button with Icon</h2>
-        <p>
-          <Button Icon={HomeIcon}>Home</Button>
-        </p>
-        <p>
-          <Button Icon={PlusIcon} mode="text">
-            Add
-          </Button>
-        </p>
-      </section>
-      <section>
-        <h2>Buttons Should Support Any Props</h2>
-        <p>
-          <Button mode="filled" disabled>
-            Disabled
-          </Button>
-        </p>
-        <p>
-          <Button onClick={() => console.log('Clicked!')}>Click me</Button>
-        </p>
-      </section>
-    </div>
+    </>
   );
 }
 
