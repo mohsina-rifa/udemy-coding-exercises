@@ -1,33 +1,28 @@
 /*
-Your task is to edit the existing Summary component such that it outputs the following content:
+Your task is to work on the Input component such that it either returns a <textarea> element or an <input> element, depending on whether a richText prop set on Input is true or false.
 
-<h1>Summary</h1>
-<p>{text}</p>
-Inside the Summary component, this content must not be wrapped by any other HTML element!
+I.e., if used like this:
 
-For example, this code would be wrong:
+<Input richText />
+the Input component should render a <textarea>. Otherwise, it should render an <input>.
 
-  <div>
-    <h1>Summary</h1>
-    <p>{text}</p>
-  </div>
+In addition, the Input component should forward all other props directly to the returned <textarea> or <input> elements.
+
+I.e., it should be usable like this:
+
+<Input type="text" placeholder="Your name" />
+(as seen in the existing App.js file)
 */
 
 
 
-function Summary({ text }) {
-  return (
-    <>
-      <h1>Summary</h1>
-      <p>{text}</p>
-    </>
-  );
-}
+import Input from './Input';
 
 function App() {
   return (
-    <div id="app" data-testid="app">
-      <Summary text="Fragments help you avoid unnecessary HTML elements." />
+    <div id="content">
+      <Input type="text" placeholder="Your name" />
+      <Input richText placeholder="Your message" />
     </div>
   );
 }
