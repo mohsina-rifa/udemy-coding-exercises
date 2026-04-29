@@ -1,13 +1,11 @@
 /*
-Your task is to help out a colleague and style a h1 element dynamically (with inline styles) depending on which button was pressed.
+Your task is to enhance the demo app that's given to you such that clicking the "Yes" and "No" buttons changes the styling of the h1 heading element.
 
-If the "Yes" button is pressed, the h1 element should receive color: "green" as an inline style. If the "No" button is pressed, color: "red" should be applied.
+Whenever the "Yes" button is clicked, the "highlight-green" CSS class should be set on the h1 element. For the "No" button, it's the "highlight-red" class that must be applied.
 
-Initially, when no button has been clicked yet, the color should be set to "white".
+If not button was clicked yet, no CSS class should be added to the h1 element.
 
-Important: You must use these specific colors ("green", "red", "white") - don't use any hex code or slight variations of these colors!
-
-In addition, this Udemy exercise workspace does not support the direct usage of React Hooks - instead, import React from 'react' and then use Hooks like this: React.useState().
+Important: In this Udemy exercise environment, React hooks must be used directly on the imported React object (import React from 'react'). For example, useState would then be called like this: React.useState().
 */
 
 
@@ -15,20 +13,24 @@ In addition, this Udemy exercise workspace does not support the direct usage of 
 import React from 'react';
 
 function App() {
-  const [color, setColor] = React.useState("white");
+  const [highlight, setHighlight] = React.useState("");
 
-  const handleYes = () => setColor("green");
-  const handleNo = () => setColor("red");
+  let h1Class = "";
+  if (highlight === "green") {
+    h1Class = "highlight-green";
+  } else if (highlight === "red") {
+    h1Class = "highlight-red";
+  }
 
   return (
     <div id="app">
-      <h1 style={{ color: color }}>CSS is great!</h1>
+      <h1 className={h1Class}>CSS is great!</h1>
       <menu>
         <li>
-          <button onClick={handleYes}>Yes</button>
+          <button onClick={() => setHighlight("green")}>Yes</button>
         </li>
         <li>
-          <button onClick={handleNo}>No</button>
+          <button onClick={() => setHighlight("red")}>No</button>
         </li>
       </menu>
     </div>

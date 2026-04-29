@@ -70,3 +70,11 @@ menu li:last-child button {
 menu li:last-child button:hover {
   background: linear-gradient(#bd4e4e, #cd3030);
 }
+
+.highlight-green {
+  color: green;
+}
+
+.highlight-red {
+  color: red;
+}
