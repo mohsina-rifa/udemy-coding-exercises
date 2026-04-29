@@ -1,53 +1,34 @@
 /*
-Your task is to work on a "User Login" component that has already been prepared by a colleague.
+Your task is to edit the <button> in the App component such that the already defined handleCreateUser function is called with a value for name.
 
-The goal is to update the data stored in the already existing user object with some dummy data once the "Login" button in the App component is pressed.
+So you must not hard-code the value that should be assigned to user.name in the handleCreateUser function but instead pass it as a value for the name parameter when a click event on the <button> occurs.
 
-The email and password properties in the user object should be set to any non-empty string values of your choice. The loggedIn field should be set to true.
-
-Important: You don't have to fetch the values entered into the <input> fields - you can simply ignore those fields for now. You'll learn how to listen to keystrokes and get user input later in the course.
+You don't have to care about any value that might be entered into the <input> field - it's just there for decoration purposes.
 */
 
 
 
-// Your goal is to change the email, password and loggedIn values when the button in the App component is pressed
-// Change them to any values of your choice (except loggedIn => that should be changed to true)
-// You DON'T need to fetch the values entered into the <input /> fields
-// You'll learn about that later in the course - for the moment, those fields are just there to look good :-)
 export const user = {
-  email: '',
-  password: '',
-  loggedIn: false,
+  name: '',
 };
 
-// Please note: The login does not actually work!
-// This exercise is just about practicing event handling
-// You'll learn how to add user authentication to React apps later in the course!
 function App() {
-  function handleLogin() {
-    user.email = 'test@example.com';
-    user.password = 'password123';
-    user.loggedIn = true;
-
-    console.log(user);
+  // Your goal: This function should be called WITH A VALUE for name when the <button> is clicked
+  function handleCreateUser(name) {
+    user.name = name;
   }
 
   return (
     <div id="app">
       <h1>User Login</h1>
-
       <p>
-        <label>Email</label>
-        <input type="email" />
-      </p>
-
-      <p>
-        <label>Password</label>
-        <input type="password" />
+        <label>Name</label>
+        {/* You don't need to do anything with this input! You'll learn how to handle user input later */}
+        <input type="text" />
       </p>
 
       <p id="actions">
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={() => handleCreateUser('name')}>Create User</button>
       </p>
     </div>
   );
