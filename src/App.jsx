@@ -1,28 +1,91 @@
 /*
-Your task is to work on the Input component such that it either returns a <textarea> element or an <input> element, depending on whether a richText prop set on Input is true or false.
+Your task is to build a highly re-usable, custom Button component that can be used in all the following ways (also see the code in the App.js file):
 
-I.e., if used like this:
 
-<Input richText />
-the Input component should render a <textarea>. Otherwise, it should render an <input>.
+"Filled" mode (default):
+  <Button>Default</Button>
+or
+  <Button mode="filled">Filled</Button>
 
-In addition, the Input component should forward all other props directly to the returned <textarea> or <input> elements.
+"Outline" mode:
+  <Button mode="outline">Outline</Button>
 
-I.e., it should be usable like this:
+"Text-only" mode:
+  <Button mode="text">Text</Button>
 
-<Input type="text" placeholder="Your name" />
-(as seen in the existing App.js file)
+With Icon:
+  <Button Icon={HomeIcon}>Home</Button>
+or
+  <Button Icon={PlusIcon} mode="text">
+    Add
+  </Button>
+
+  
+Hint: To make sure the icon becomes visible (if passed correctly to the component & used in there), wrap the icon component in the button with a <span> that has the class "button-icon" on it.
+
+Also wrap the children prop with a <span>!
+
+You find all the styles (CSS classes) that are required to build a button that supports these different "modes" in the provided index.css file!
+
+All buttons need a button CSS class - and then, depending on their mode, additional classes.
+
+In addition, the custom Button component must accept all standard props that could be set on the built-in <button>. These props should be forwarded to the default <button> element that will be used in the custom Button component.
+
+Your task therefore is to work on the Button component provided in the Button.js file. Don't add multiple custom components, instead work on that one provided component and make sure that it supports all these different modes & features. Also make sure, that if no mode is set, the "filled" mode is assumed as a default.
 */
 
 
 
-import Input from './Input';
+import Button from './Button';
+import HomeIcon from './HomeIcon';
+import PlusIcon from './PlusIcon';
 
 function App() {
   return (
-    <div id="content">
-      <Input type="text" placeholder="Your name" />
-      <Input richText placeholder="Your message" />
+     <div id="app">
+      <section>
+        <h2>Filled Button (Default)</h2>
+        <p>
+          <Button>Default</Button>
+        </p>
+        <p>
+          <Button mode="filled">Filled (Default)</Button>
+        </p>
+      </section>
+      <section>
+        <h2>Button with Outline</h2>
+        <p>
+          <Button mode="outline">Outline</Button>
+        </p>
+      </section>
+      <section>
+        <h2>Text-only Button</h2>
+        <p>
+          <Button mode="text">Text</Button>
+        </p>
+      </section>
+      <section>
+        <h2>Button with Icon</h2>
+        <p>
+          <Button Icon={HomeIcon}>Home</Button>
+        </p>
+        <p>
+          <Button Icon={PlusIcon} mode="text">
+            Add
+          </Button>
+        </p>
+      </section>
+      <section>
+        <h2>Buttons Should Support Any Props</h2>
+        <p>
+          <Button mode="filled" disabled>
+            Disabled
+          </Button>
+        </p>
+        <p>
+          <Button onClick={() => console.log('Clicked!')}>Click me</Button>
+        </p>
+      </section>
     </div>
   );
 }
