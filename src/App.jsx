@@ -1,36 +1,26 @@
 /*
-Your task is to dynamically apply a style (color: red) to the <p>Style me</p> element in the provided React app.
+For this exercise, imagine that colleagues gave you code they wrote for a React app they're working on.
 
-The style should be applied as an inline style (i.e., via the style attribute / prop) when the <button> is clicked for the first time. Once the button is clicked again, the styling should switch back to color: white, which should also be the initial style.
-
-Make sure that the button toggles between these two styles (color: white <=> color: red).
+At the moment, this code is failing and it's your job to find and fix all errors that are hiding in the code.
 */
 
 
 
 import React from 'react';
 
+import './index.css';
+
 // don't change the Component name "App"
 export default function App() {
-  const [isRed, setIsRed] = React.useState(false);
-
-  function toggleStyle() {
-    setIsRed((prev) => !prev);
-  }
-
-  return (
-    <div>
-      <p
-        style={{
-          color: isRed ? "red" : "white",
-          fontSize: "2.5rem",
-          fontWeight: "bold",
-          margin: "2rem 0 2.5rem 0",
-        }}
-      >
-        Style me!
-      </p>
-      <button onClick={toggleStyle}>Toggle style</button>
-    </div>
-  );
+    const clickHandler = () => {
+        console.log('Clicked!');
+    };
+    
+    return (
+        <div>
+          <h2>You're logged in!</h2>
+          <p>Welcome to your user profile!</p>
+          <button onClick={clickHandler}>Click me!</button>
+        </div>
+    );
 }
