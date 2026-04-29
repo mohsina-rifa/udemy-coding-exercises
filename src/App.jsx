@@ -1,51 +1,54 @@
 /*
-Your task is to create a reusable Card component that takes a name prop as an input and, in addition, can be wrapped around any JSX code.
+Your task is to work on a "User Login" component that has already been prepared by a colleague.
 
-Use the already existing Card.js file to create the Card component in there. You can add the card CSS class to the main wrapping element in that component for some styling.
+The goal is to update the data stored in the already existing user object with some dummy data once the "Login" button in the App component is pressed.
 
-The name prop should be output as a title inside the Card component, the wrapped JSX code should be output below that title.
+The email and password properties in the user object should be set to any non-empty string values of your choice. The loggedIn field should be set to true.
 
-For example, the final Card component, should be usable like this:
-
-  <Card name="Maria Miles">
-    <p>
-      Maria is a professor of Computer Science at the University of Illinois.
-    </p>
-    <p>
-      <a href="mailto:blake@example.com">Email Maria</a>
-    </p>
-  </Card>
-
-You can, but don't have to, tweak and edit the JSX code returned by the App component.
+Important: You don't have to fetch the values entered into the <input> fields - you can simply ignore those fields for now. You'll learn how to listen to keystrokes and get user input later in the course.
 */
 
 
 
-import Card from './Card';
+// Your goal is to change the email, password and loggedIn values when the button in the App component is pressed
+// Change them to any values of your choice (except loggedIn => that should be changed to true)
+// You DON'T need to fetch the values entered into the <input /> fields
+// You'll learn about that later in the course - for the moment, those fields are just there to look good :-)
+export const user = {
+  email: '',
+  password: '',
+  loggedIn: false,
+};
 
+// Please note: The login does not actually work!
+// This exercise is just about practicing event handling
+// You'll learn how to add user authentication to React apps later in the course!
 function App() {
+  function handleLogin() {
+    user.email = 'test@example.com';
+    user.password = 'password123';
+    user.loggedIn = true;
+
+    console.log(user);
+  }
+
   return (
     <div id="app">
-      <h1>Available Experts</h1>
-      <Card name="Anthony Blake">
-        <p>
-          Blake is a professor of Computer Science at the University of
-          Illinois.
-        </p>
-        <p>
-          <a href="mailto:blake@example.com">Email Anthony</a>
-        </p>
-      </Card>
+      <h1>User Login</h1>
 
-      <Card name="Maria Miles">
-        <p>
-          Maria is a professor of Computer Science at the University of
-          Illinois.
-        </p>
-        <p>
-          <a href="mailto:blake@example.com">Email Maria</a>
-        </p>
-      </Card>
+      <p>
+        <label>Email</label>
+        <input type="email" />
+      </p>
+
+      <p>
+        <label>Password</label>
+        <input type="password" />
+      </p>
+
+      <p id="actions">
+        <button onClick={handleLogin}>Login</button>
+      </p>
     </div>
   );
 }
