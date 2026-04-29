@@ -1,37 +1,51 @@
 /*
-Your task is to make the CourseGoal component reusable / configurable. It should accept a "title" and a "description" input and output the received data between the <h2> (title) and <p> (description) tags.
+Your task is to create a reusable Card component that takes a name prop as an input and, in addition, can be wrapped around any JSX code.
 
-The App component should then render at least two instances of the CourseGoal component.
+Use the already existing Card.js file to create the Card component in there. You can add the card CSS class to the main wrapping element in that component for some styling.
 
-One of those CourseGoal components must receive a title of "Learn React" and a description of "In-depth". The other titles and descriptions are entirely up to you.
+The name prop should be output as a title inside the Card component, the wrapped JSX code should be output below that title.
+
+For example, the final Card component, should be usable like this:
+
+  <Card name="Maria Miles">
+    <p>
+      Maria is a professor of Computer Science at the University of Illinois.
+    </p>
+    <p>
+      <a href="mailto:blake@example.com">Email Maria</a>
+    </p>
+  </Card>
+
+You can, but don't have to, tweak and edit the JSX code returned by the App component.
 */
 
 
 
-export function CourseGoal(props) {
-  return (
-    <li>
-      <h2>{props.title}</h2>
-      <p>{props.description}</p>
-    </li>
-  );
-}
+import Card from './Card';
 
 function App() {
   return (
-    <div id="app" data-testid="app">
-      <h1>Time to Practice</h1>
-      <p>One course, many goals! 🎯</p>
-      <ul>
-        <CourseGoal 
-            title="Learn React"
-            description="In-depth"
-        />
-        <CourseGoal 
-            title="React Project"
-            description="Practical experience"
-        />
-      </ul>
+    <div id="app">
+      <h1>Available Experts</h1>
+      <Card name="Anthony Blake">
+        <p>
+          Blake is a professor of Computer Science at the University of
+          Illinois.
+        </p>
+        <p>
+          <a href="mailto:blake@example.com">Email Anthony</a>
+        </p>
+      </Card>
+
+      <Card name="Maria Miles">
+        <p>
+          Maria is a professor of Computer Science at the University of
+          Illinois.
+        </p>
+        <p>
+          <a href="mailto:blake@example.com">Email Maria</a>
+        </p>
+      </Card>
     </div>
   );
 }
