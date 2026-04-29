@@ -1,37 +1,47 @@
 /*
-Your task is to edit the <button> in the App component such that the already defined handleCreateUser function is called with a value for name.
+You're working on a part of an online shop where a discounted price should be displayed on the screen once the user clicked a button.
 
-So you must not hard-code the value that should be assigned to user.name in the handleCreateUser function but instead pass it as a value for the name parameter when a click event on the <button> occurs.
+Your task is to add an event listener to listen for clicks on the button that's already included in the App component.
 
-You don't have to care about any value that might be entered into the <input> field - it's just there for decoration purposes.
+Upon a button click, the price should change from $100 to $75.
+
+Add a state value to the existing App component function and make sure the state value is both updated upon button clicks and output as part of the JSX code.
+
+---
+
+Important: In this Udemy environment, you CAN'T import & use useState like this:
+
+  import { useState } from 'react';
+  ...
+  useState();
+  Instead, import & use it like this (in your component):
+
+  import React from 'react';
+  ...
+  React.useState();
 */
 
 
 
-export const user = {
-  name: '',
-};
+// IMPORTANT: You CAN'T import & use useState like this in this Udemy environment
+// import { useState } from 'react'
+// Instead, import & use it like this:
+// import React from 'react';
+// React.useState();
 
-function App() {
-  // Your goal: This function should be called WITH A VALUE for name when the <button> is clicked
-  function handleCreateUser(name) {
-    user.name = name;
+import React from 'react';
+
+export default function App() {
+  const [price, setPrice] = React.useState(100);
+
+  function applyDiscount() {
+    setPrice(75);
   }
 
   return (
-    <div id="app">
-      <h1>User Login</h1>
-      <p>
-        <label>Name</label>
-        {/* You don't need to do anything with this input! You'll learn how to handle user input later */}
-        <input type="text" />
-      </p>
-
-      <p id="actions">
-        <button onClick={() => handleCreateUser('name')}>Create User</button>
-      </p>
+    <div>
+      <p data-testid="price">${price}</p>
+      <button onClick={applyDiscount}>Apply Discount</button>
     </div>
   );
 }
-
-export default App;
