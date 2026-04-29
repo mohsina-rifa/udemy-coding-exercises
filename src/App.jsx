@@ -1,40 +1,37 @@
 /*
-Your task is to fill the already existing User component with some life! You should output the user's first name and last name (stored in the also already existing userData object) inside of the User component's <h2> element.
+Your task is to make the CourseGoal component reusable / configurable. It should accept a "title" and a "description" input and output the received data between the <h2> (title) and <p> (description) tags.
 
-In addition, you should output the title (also stored in userData) in the <p> element inside the User component.
+The App component should then render at least two instances of the CourseGoal component.
 
-You're not allowed to copy & paste the values into the component.
+One of those CourseGoal components must receive a title of "Learn React" and a description of "In-depth". The other titles and descriptions are entirely up to you.
 */
 
 
 
-import React from "react";
-
-export const userData = {
-  firstName: 'Maximilian', // feel free to replace the name value
-  lastName: 'Schwarzmüller', // feel free to replace the name value
-  title: 'Instructor', // feel free to replace the title value
-};
-
-// Edit the User component code to output the userData data
-export function User() {
+export function CourseGoal(props) {
   return (
-    <div id="user" data-testid="user">
-      <h2>
-        { userData.firstName } { userData.lastName }
-      </h2>
-      <p>{ userData.title }</p>
-    </div>
+    <li>
+      <h2>{props.title}</h2>
+      <p>{props.description}</p>
+    </li>
   );
 }
 
-// DON'T edit the App component code
 function App() {
   return (
-    <div id="app">
+    <div id="app" data-testid="app">
       <h1>Time to Practice</h1>
-      <p>Welcome on board of this course! You got this 💪</p>
-      <User />
+      <p>One course, many goals! 🎯</p>
+      <ul>
+        <CourseGoal 
+            title="Learn React"
+            description="In-depth"
+        />
+        <CourseGoal 
+            title="React Project"
+            description="Practical experience"
+        />
+      </ul>
     </div>
   );
 }
