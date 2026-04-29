@@ -1,56 +1,37 @@
 /*
-Your task is to collect the values entered into the two input controls (<textarea> and <input>) via two-way binding.
+Your task is to help out a colleague and style a h1 element dynamically (with inline styles) depending on which button was pressed.
 
-In addition, you should pass the collected values via the appropriate props to the already existing Review component.
+If the "Yes" button is pressed, the h1 element should receive color: "green" as an inline style. If the "No" button is pressed, color: "red" should be applied.
 
-Important: In this Udemy workspace, you must use React.useState() instead of just useState()!
+Initially, when no button has been clicked yet, the color should be set to "white".
 
-The final app should allow users to enter values and then see those entered values in the Review component which is output below the input components.
+Important: You must use these specific colors ("green", "red", "white") - don't use any hex code or slight variations of these colors!
 
-The "Save" button is just there for decoration purposes - you don't need to do anything with that!
+In addition, this Udemy exercise workspace does not support the direct usage of React Hooks - instead, import React from 'react' and then use Hooks like this: React.useState().
 */
 
 
 
 import React from 'react';
-import Review from './Review';
 
-// don't change the Component name "App"
 function App() {
-  const [feedback, setFeedback] = React.useState('');
-  const [student, setStudent] = React.useState('');
+  const [color, setColor] = React.useState("white");
 
-  function handleFeedbackChange(event) {
-    setFeedback(event.target.value);
-  }
-
-  function handleStudentChange(event) {
-    setStudent(event.target.value);
-  }
+  const handleYes = () => setColor("green");
+  const handleNo = () => setColor("red");
 
   return (
-    <>
-      <section id="feedback">
-        <h2>Please share some feedback</h2>
-        <p>
-          <label>Your Feedback</label>
-          <textarea value={feedback} onChange={handleFeedbackChange} />
-        </p>
-        <p>
-          <label>Your Name</label>
-          <input type="text" value={student} onChange={handleStudentChange} />
-        </p>
-      </section>
-      <section id="draft">
-        <h2>Your feedback</h2>
-
-        <Review feedback={feedback} student={student} />
-
-        <p>
-          <button>Save</button>
-        </p>
-      </section>
-    </>
+    <div id="app">
+      <h1 style={{ color: color }}>CSS is great!</h1>
+      <menu>
+        <li>
+          <button onClick={handleYes}>Yes</button>
+        </li>
+        <li>
+          <button onClick={handleNo}>No</button>
+        </li>
+      </menu>
+    </div>
   );
 }
 
