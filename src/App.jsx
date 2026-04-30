@@ -1,81 +1,56 @@
 /*
-Your working on a "Workout" app and your task is to start and stop timers when users click the "Start" and "Stop" buttons of a selected workout.
+Important: Use React's forwardRef() feature. Udemy's playground does not support React 19!
 
-You're provided with some code that already displays some workout items, therefore, you don't need to work on the JSX code or manage any state.
+Your task is to finish a custom Input component that was created by a colleague.
 
-Instead, your task is to set a timer if the "Start" button is clicked and clear (stop) that timer once the "Stop" button is clicked.
+The Input component must be highly configurable and meet the following requirements:
+  ⮞ It must accept a label prop which is used to set the text for the <label> element (i.e., between the <label> tags)
+  ⮞ It must accept all other attributes that could be added to <input> elements and set those props on the <input> element
+  ⮞ It must accept the special ref prop and connect the received ref to the <input> element
 
-If a timer expires, the same code that should execute if it's stopped manually (by pressing the "Stop" button) should be executed.
+This Input component can then be used in the App component. There, it's actually already being used and some props (the label and type props) are already set on the custom Input component.
 
-The timer expiration time should be different for every workout - take a closer look at the Workout component to get access to that workout-specific time.
+But in addition, your task also is to read the entered name and email values inside of the handleSaveData function with help of React's "ref" feature.
 
-You also must make sure that different Workout component instances set and manage separate, independent timers (i.e., when starting timers for "Pushups" and "Squats", clicking "Stop" for "Squats" should not stop the "Pushups" timer etc).
+To achieve this task, you must ensure that the custom Input component is able to receive the special ref prop and that this prop is then "connected" to the returned <input> element.
 
-When a timer expires, the same function that's triggered when the "Stop" button is pressed should be executed.
+Of course you also must add fitting refs to the App component and use them in handleSaveData to retrieve the actual entered input data.
 
-Important: In this Udemy exercise environment, React Hooks can't be imported directly. Instead, you have to import React from 'react' and then call Hooks on that React object (e.g., React.useState()).
+The read values must then be stored in the already-existing userData object.
+
+Important: In this Udemy exercise workspace, any React Hooks must be accessed directly on the imported React object (import React from 'react') - for example: React.useState().
+
+The same is true for other React functions you might need to solve this task!
 */
 
 
 
 import React from 'react';
+import Input from './Input';
 
-import Workout from './Workout';
+export const userData = {
+  name: '',
+  email: '',
+};
 
-const workouts = [
-  {
-    title: 'Pushups',
-    description: 'Do 30 pushups',
-    time: 1000 * 60 * 3,
-  },
-  {
-    title: 'Squats',
-    description: 'Do 30 squats',
-    time: 1000 * 60 * 2,
-  },
-  {
-    title: 'Pullups',
-    description: 'Do 10 pullups',
-    time: 1000 * 60 * 3,
-  },
-];
+export function App() {
+  const nameInputRef = React.useRef();
+  const emailInputRef = React.useRef();
 
-function App() {
-  const [completedWorkouts, setCompletedWorkouts] = React.useState([]);
+  function handleSaveData() {
+    userData.name = nameInputRef.current.value;
+    userData.email = emailInputRef.current.value;
 
-  function handleWorkoutComplete(workoutTitle) {
-    setCompletedWorkouts((prevCompletedWorkouts) => [
-      ...prevCompletedWorkouts,
-      workoutTitle,
-    ]);
+    console.log(userData);
   }
 
   return (
-    <main>
-      <section>
-        <h2>Choose a workout</h2>
-        <ul>
-          {workouts.map((workout) => (
-            <li key={workout.title}>
-              <Workout
-                {...workout}
-                onComplete={() => handleWorkoutComplete(workout.title)}
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <h2>Completed workouts</h2>
-        <ul>
-          {completedWorkouts.map((workoutTitle, index) => (
-            <li key={index}>{workoutTitle}</li>
-          ))}
-        </ul>
-      </section>
-    </main>
+    <div id="app">
+      <Input type="text" label="Your Name" ref={nameInputRef} />
+      <Input type="email" label="Your E-Mail" ref={emailInputRef} />
+      <p id="actions">
+        <button onClick={handleSaveData}>Save Data</button>
+      </p>
+    </div>
   );
 }
-
-export default App;
