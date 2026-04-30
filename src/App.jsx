@@ -1,41 +1,80 @@
 /*
-Your given a code snippet that's part of a bigger app that deals with user image uploads.
+Your working on a "Workout" app and your task is to start and stop timers when users click the "Start" and "Stop" buttons of a selected workout.
 
-Since the native, built-in <input type="file"> element is hard to style and doesn't fit the intended app style, it's hidden via display: none in the provided index.css file.
+You're provided with some code that already displays some workout items, therefore, you don't need to work on the JSX code or manage any state.
 
-Therefore, to make the file picker work without being displayed, your task is to ensure that the click event on the <input type="file"> element is triggered whenever the <button>Pick Image</button> is clicked.
+Instead, your task is to set a timer if the "Start" button is clicked and clear (stop) that timer once the "Stop" button is clicked.
 
-This can be achieved by calling the built-in click() method on the underlying input element.
+If a timer expires, the same code that should execute if it's stopped manually (by pressing the "Stop" button) should be executed.
 
-You should use React's "ref" feature to get hold of the <input type="file"> element and execute that click() method on it whenever the <button> is clicked.
+The timer expiration time should be different for every workout - take a closer look at the Workout component to get access to that workout-specific time.
 
-Important: In this Udemy exercise environment, React hooks must be used directly on the imported React object (import React from 'react'). For example, useState (which you don't need for this task) would then be called like this: React.useState().
+You also must make sure that different Workout component instances set and manage separate, independent timers (i.e., when starting timers for "Pushups" and "Squats", clicking "Stop" for "Squats" should not stop the "Pushups" timer etc).
+
+When a timer expires, the same function that's triggered when the "Stop" button is pressed should be executed.
+
+Important: In this Udemy exercise environment, React Hooks can't be imported directly. Instead, you have to import React from 'react' and then call Hooks on that React object (e.g., React.useState()).
 */
 
 
 
 import React from 'react';
 
-function App() {
-  const fileInputRef = React.useRef();
+import Workout from './Workout';
 
-  function handlePickImage() {
-    fileInputRef.current.click();
+const workouts = [
+  {
+    title: 'Pushups',
+    description: 'Do 30 pushups',
+    time: 1000 * 60 * 3,
+  },
+  {
+    title: 'Squats',
+    description: 'Do 30 squats',
+    time: 1000 * 60 * 2,
+  },
+  {
+    title: 'Pullups',
+    description: 'Do 10 pullups',
+    time: 1000 * 60 * 3,
+  },
+];
+
+function App() {
+  const [completedWorkouts, setCompletedWorkouts] = React.useState([]);
+
+  function handleWorkoutComplete(workoutTitle) {
+    setCompletedWorkouts((prevCompletedWorkouts) => [
+      ...prevCompletedWorkouts,
+      workoutTitle,
+    ]);
   }
 
   return (
-    <div id="app">
-      <p>Please select an image</p>
-      <p>
-        <input
-          data-testid="file-picker"
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-        />
-        <button onClick={handlePickImage}>Pick Image</button>
-      </p>
-    </div>
+    <main>
+      <section>
+        <h2>Choose a workout</h2>
+        <ul>
+          {workouts.map((workout) => (
+            <li key={workout.title}>
+              <Workout
+                {...workout}
+                onComplete={() => handleWorkoutComplete(workout.title)}
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Completed workouts</h2>
+        <ul>
+          {completedWorkouts.map((workoutTitle, index) => (
+            <li key={index}>{workoutTitle}</li>
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 }
 
