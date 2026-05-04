@@ -1,56 +1,50 @@
 /*
-Important: Use React's forwardRef() feature. Udemy's playground does not support React 19!
+Your working on a part of an application that contains a form which should be resettable from outside that form.
 
-Your task is to finish a custom Input component that was created by a colleague.
+A colleague prepared a Form component that contains a couple of dummy inputs and a "Save" button that's not doing anything.
 
-The Input component must be highly configurable and meet the following requirements:
-  ⮞ It must accept a label prop which is used to set the text for the <label> element (i.e., between the <label> tags)
-  ⮞ It must accept all other attributes that could be added to <input> elements and set those props on the <input> element
-  ⮞ It must accept the special ref prop and connect the received ref to the <input> element
+Your task is to expose a clear() function from inside that Form component so that other components that use the Form component can call that function to reset the form.
 
-This Input component can then be used in the App component. There, it's actually already being used and some props (the label and type props) are already set on the custom Input component.
+Because that exposed clear() function should call the form's built-in reset() method (the JS form object, which is the underlying object of the <form> element, has a reset() method that does exactly what its name implies).
 
-But in addition, your task also is to read the entered name and email values inside of the handleSaveData function with help of React's "ref" feature.
+So the Form component should be usable like this:
 
-To achieve this task, you must ensure that the custom Input component is able to receive the special ref prop and that this prop is then "connected" to the returned <input> element.
+  function SomeComponent() {
+    const form = React.useRef();
+  
+    function handleClear() {
+      form.current.clear();
+    }
+  
+    return <Form ref={form}/>
+  }
 
-Of course you also must add fitting refs to the App component and use them in handleSaveData to retrieve the actual entered input data.
+After adding this feature to the Form component you should tweak the App component to establish a "connection" to the Form component and call the newly exposed clear() method from inside the App component's handleRestart() function.
 
-The read values must then be stored in the already-existing userData object.
+So you should add code similar to the above code snippet to the App component.
 
-Important: In this Udemy exercise workspace, any React Hooks must be accessed directly on the imported React object (import React from 'react') - for example: React.useState().
-
-The same is true for other React functions you might need to solve this task!
+Important: In this Udemy exercise workspace, any React Hooks (and other React functions!) must be accessed directly on the imported React object (import React from 'react') - for example: React.useState().
 */
 
 
 
 import React from 'react';
-import Input from './Input';
+import Form from './Form';
 
-export const userData = {
-  name: '',
-  email: '',
-};
+// Don't change the name of the 'App' 
+// function and keep it a named export
 
 export function App() {
-  const nameInputRef = React.useRef();
-  const emailInputRef = React.useRef();
+  const formRef = React.useRef();
 
-  function handleSaveData() {
-    userData.name = nameInputRef.current.value;
-    userData.email = emailInputRef.current.value;
-
-    console.log(userData);
+  function handleRestart() {
+    formRef.current.clear();
   }
 
   return (
     <div id="app">
-      <Input type="text" label="Your Name" ref={nameInputRef} />
-      <Input type="email" label="Your E-Mail" ref={emailInputRef} />
-      <p id="actions">
-        <button onClick={handleSaveData}>Save Data</button>
-      </p>
+      <button onClick={handleRestart}>Restart</button>
+      <Form ref={formRef} />
     </div>
   );
 }
