@@ -1,50 +1,46 @@
 /*
-Your working on a part of an application that contains a form which should be resettable from outside that form.
+A colleague asked you to finish work on a Toast component they worked on.
 
-A colleague prepared a Form component that contains a couple of dummy inputs and a "Save" button that's not doing anything.
+That component should output a short info message upon certain page events - e.g., once a user successfully enrolled into a course.
 
-Your task is to expose a clear() function from inside that Form component so that other components that use the Form component can call that function to reset the form.
+To optimize the final DOM structure, the rendered content of the Toast component should be injected directly into the <body> element (which could be selected via document.querySelector('body')). It should NOT be rendered in the place where the <Toast /> component is used in the JSX code!
 
-Because that exposed clear() function should call the form's built-in reset() method (the JS form object, which is the underlying object of the <form> element, has a reset() method that does exactly what its name implies).
+For this task, the edited Toast component should then be displayed conditionally once a user clicked the Enrol button in the App component.
 
-So the Form component should be usable like this:
+After 3 seconds (set via setTimeout), the Toast component should be removed from the page again.
 
-  function SomeComponent() {
-    const form = React.useRef();
-  
-    function handleClear() {
-      form.current.clear();
-    }
-  
-    return <Form ref={form}/>
-  }
+Important: In this Udemy exercise workspace, any React Hooks (and other React functions) must be accessed directly on the imported React object (import React from 'react') - for example: React.useState().
 
-After adding this feature to the Form component you should tweak the App component to establish a "connection" to the Form component and call the newly exposed clear() method from inside the App component's handleRestart() function.
-
-So you should add code similar to the above code snippet to the App component.
-
-Important: In this Udemy exercise workspace, any React Hooks (and other React functions!) must be accessed directly on the imported React object (import React from 'react') - for example: React.useState().
+The same is true for any functions that are part of the react-dom library - you must instead import ReactDOM from 'react-dom' and then call any functions on that ReactDOM object (ReactDOM.someFunction()).
 */
 
 
 
 import React from 'react';
-import Form from './Form';
+import Toast from './Toast';
 
-// Don't change the name of the 'App' 
-// function and keep it a named export
+function App() {
+  const [toastVisible, setToastVisible] = React.useState(false);
 
-export function App() {
-  const formRef = React.useRef();
-
-  function handleRestart() {
-    formRef.current.clear();
+  function handleEnrol() {
+    setToastVisible(true);
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 3000);
   }
 
   return (
     <div id="app">
-      <button onClick={handleRestart}>Restart</button>
-      <Form ref={formRef} />
+      {toastVisible && <Toast message="Successfully enrolled!" />}
+      <article>
+        <h2>React Course</h2>
+        <p>
+          A course that teaches you React from the ground up and in great depth!
+        </p>
+        <button onClick={handleEnrol}>Enrol</button>
+      </article>
     </div>
   );
 }
+
+export default App;
